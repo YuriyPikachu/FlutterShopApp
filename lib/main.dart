@@ -53,6 +53,7 @@ class HomePageState extends State<HomePage>
         ),
         // 底端栏是一个 TabBar
         bottomNavigationBar: Material(
+          elevation: 3,
           child: TabBar(
             indicator: const BoxDecoration(),
             labelColor: Colors.black,
