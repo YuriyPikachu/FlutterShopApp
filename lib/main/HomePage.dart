@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/main/HomeBanner.dart';
+import 'package:flutterapp/main/Search.dart';
 
 class HomePage extends StatefulWidget {
   @override
   HomePageState createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+class HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   var tabController; // 先声明变量
 
   @override
@@ -15,7 +17,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     this.tabController = TabController(
         vsync: this, // 动画效果的异步处理
         length: 2 // tab 个数
-    );
+        );
   }
 
   // 当整个页面 dispose 时，记得把控制器也 dispose 掉，释放内存
@@ -31,7 +33,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
           controller: this.tabController, //配置控制器
           children: [
             // Tab 内容
-            new ListView(children: _getListData()),
+            ListView(children: _getListData()),
             Text('bbb'),
           ],
         ),
@@ -59,12 +61,12 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   _getListData() {
     List<Widget> widgets = [];
-//    widgets.add(Text("搜索你感兴趣的人"));
     widgets.add(HomeBanner());
+    widgets.add(Search());
     for (int i = 1; i < 100; i++) {
-      widgets.add(new Padding(padding: new EdgeInsets.all(10.0), child: new Text("Row $i")));
+      widgets.add(new Padding(
+          padding: new EdgeInsets.all(10.0), child: new Text("Row $i")));
     }
     return widgets;
   }
-
 }
