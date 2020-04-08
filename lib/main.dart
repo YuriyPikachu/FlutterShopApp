@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_banner_swiper/flutter_banner_swiper.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,8 +20,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   var tabController; // 先声明变量
 
   @override
@@ -45,7 +45,7 @@ class HomePageState extends State<HomePage>
           controller: this.tabController, //配置控制器
           children: [
             // Tab 内容
-            Text('aaa'),
+            new ListView(children: _getListData()),
             Text('bbb'),
             Text('ccc'),
             Text('ddd'),
@@ -79,5 +79,65 @@ class HomePageState extends State<HomePage>
             ],
           ),
         ));
+  }
+
+  _getListData() {
+    List<Widget> widgets = [];
+    widgets.add(Myexample());
+    for (int i = 1; i < 100; i++) {
+      widgets.add(new Padding(padding: new EdgeInsets.all(10.0), child: new Text("Row $i")));
+    }
+    return widgets;
+  }
+
+}
+
+class Myexample extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _MyexampleState();
+  }
+}
+
+class _MyexampleState extends State<Myexample> {
+  @override
+  void initState() {
+    bannerList.add(
+        "http:\/\/minimg.hexun.com\/i4.hexunimg.cn\/mobile_show\/image\/20190701\/20190701121331_376_621x310.jpg");
+    bannerList.add(
+        "http:\/\/minimg.hexun.com\/i7.hexun.com\/2015-11-16\/180596378_c324x234.jpg");
+    bannerList.add(
+        "http:\/\/minimg.hexun.com\/i6.hexun.com\/2014-11-19\/170564509_c324x234.jpg");
+    bannerList.add(
+        "http:\/\/minimg.hexun.com\/i7.hexun.com\/2014-09-02\/168105362_c324x234.jpg");
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return getList();
+  }
+
+  List<String> bannerList = new List();
+
+  Widget getList() {
+    return BannerSwiper(
+      //width  和 height 是图片的高宽比  不用传具体的高宽   必传
+      height: 108,
+      width: 54,
+      //轮播图数目 必传
+      length: 4,
+      //轮播的item  widget 必传
+      getwidget: (index) {
+        return new GestureDetector(
+            child: Image.network(
+              bannerList[index % bannerList.length],
+              fit: BoxFit.cover,
+            ),
+            onTap: () {
+              //点击后todo
+            });
+      },
+    );
   }
 }
