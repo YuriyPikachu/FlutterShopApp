@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_banner_swiper/flutter_banner_swiper.dart';
+import 'package:flutterapp/main/HomeBanner.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,7 +28,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     super.initState();
     this.tabController = TabController(
         vsync: this, // 动画效果的异步处理
-        length: 4 // tab 个数
+        length: 2 // tab 个数
         );
   }
 
@@ -47,8 +47,6 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
             // Tab 内容
             new ListView(children: _getListData()),
             Text('bbb'),
-            Text('ccc'),
-            Text('ddd'),
           ],
         ),
         // 底端栏是一个 TabBar
@@ -61,20 +59,12 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
             labelStyle: TextStyle(color: Colors.red, fontSize: 13),
             tabs: <Tab>[
               Tab(
-                text: '主页',
+                text: '发现',
                 icon: Icon(Icons.home),
               ),
               Tab(
-                text: '素材',
-                icon: Icon(Icons.history),
-              ),
-              Tab(
-                text: '购物车',
-                icon: Icon(Icons.book),
-              ),
-              Tab(
                 text: '我的',
-                icon: Icon(Icons.book),
+                icon: Icon(Icons.history),
               ),
             ],
           ),
@@ -83,7 +73,8 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   _getListData() {
     List<Widget> widgets = [];
-    widgets.add(Myexample());
+//    widgets.add(Text("搜索你感兴趣的人"));
+    widgets.add(HomeBanner());
     for (int i = 1; i < 100; i++) {
       widgets.add(new Padding(padding: new EdgeInsets.all(10.0), child: new Text("Row $i")));
     }
@@ -92,52 +83,4 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
 }
 
-class Myexample extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _MyexampleState();
-  }
-}
 
-class _MyexampleState extends State<Myexample> {
-  @override
-  void initState() {
-    bannerList.add(
-        "http:\/\/minimg.hexun.com\/i4.hexunimg.cn\/mobile_show\/image\/20190701\/20190701121331_376_621x310.jpg");
-    bannerList.add(
-        "http:\/\/minimg.hexun.com\/i7.hexun.com\/2015-11-16\/180596378_c324x234.jpg");
-    bannerList.add(
-        "http:\/\/minimg.hexun.com\/i6.hexun.com\/2014-11-19\/170564509_c324x234.jpg");
-    bannerList.add(
-        "http:\/\/minimg.hexun.com\/i7.hexun.com\/2014-09-02\/168105362_c324x234.jpg");
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return getList();
-  }
-
-  List<String> bannerList = new List();
-
-  Widget getList() {
-    return BannerSwiper(
-      //width  和 height 是图片的高宽比  不用传具体的高宽   必传
-      height: 108,
-      width: 54,
-      //轮播图数目 必传
-      length: 4,
-      //轮播的item  widget 必传
-      getwidget: (index) {
-        return new GestureDetector(
-            child: Image.network(
-              bannerList[index % bannerList.length],
-              fit: BoxFit.cover,
-            ),
-            onTap: () {
-              //点击后todo
-            });
-      },
-    );
-  }
-}
